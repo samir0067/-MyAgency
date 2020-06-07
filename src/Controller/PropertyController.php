@@ -58,31 +58,3 @@ class PropertyController extends AbstractController
         ]);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//$property = new Property();
-//        $property->setTitle('Mon premier bien')
-//            ->setPrice(200000)
-//            ->setRooms(4)
-//            ->setBedrooms(3)
-//            ->setDescription('Une petite description du bien')
-//            ->setSurface(60)
-//            ->setFloor(4)
-//            ->setHeat(1)
-//            ->setCity('Strasbourg')
-//            ->setAddress('10 rue du neufeld')
-//            ->setPostalCode('67100');
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($property);
-//        $em->flush();

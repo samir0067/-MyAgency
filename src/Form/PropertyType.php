@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Property;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,21 +14,43 @@ class PropertyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('surface')
-            ->add('rooms')
-            ->add('bedrooms')
-            ->add('floor')
-            ->add('price')
-            ->add('heat', ChoiceType::class, [
-                'choice' => Property::HEAT
+            ->add('title', null, [
+                'label' => 'Titre'
             ])
-            ->add('city')
-            ->add('address')
-            ->add('postal_code')
-            ->add('sold')
-//            ->add('created_at')
+            ->add('description', null, [
+                'label' => 'Déscription'
+            ])
+            ->add('surface', null, [
+                'label' => 'Surface'
+            ])
+            ->add('rooms', null, [
+                'label' => 'Pièces'
+            ])
+            ->add('bedrooms', null, [
+                'label' => 'Chambres'
+            ])
+            ->add('floor', null, [
+                'label' => 'Étage'
+            ])
+            ->add('price', null, [
+                'label' => 'Prix'
+            ])
+            ->add('heat', ChoiceType::class, [
+                'choices' => $this->getChoices(),
+                'label' => 'Chauffage'
+            ])
+            ->add('city', null, [
+                'label' => 'Ville'
+            ])
+            ->add('address', null, [
+                'label' => 'Adresse'
+            ])
+            ->add('postal_code', null, [
+                'label' => 'CP'
+            ])
+            ->add('sold', null, [
+                'label' => 'Vendu'
+            ])
         ;
     }
 
@@ -38,14 +61,14 @@ class PropertyType extends AbstractType
             'translation_domain' => 'forms'
         ]);
     }
-//
-//    private function getChoices()
-//    {
-//        $choices = Property::HEAT;
-//        $output = [];
-//        foreach($choices as $key => $value) {
-//            $output[$value] = $key;
-//        }
-//        return $output;
-//    }
+
+    private function getChoices()
+    {
+        $choices = Property::HEAT;
+        $output = [];
+        foreach($choices as $key => $value) {
+            $output[$value] = $key;
+        }
+        return $output;
+    }
 }
