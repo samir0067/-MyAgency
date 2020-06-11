@@ -37,11 +37,8 @@ class PropertyController extends AbstractController
      */
     public function index(PaginationInterface $paginator, Request $request): Response
     {
-        $properties = $paginator->paginate(
-            $this->repository->findAllVisibleQuery(),
-            $request->query->getInt('page', 1),
-            12
-        );
+        $properties = $paginator->getCurrentPageNumber();
+
 
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties',

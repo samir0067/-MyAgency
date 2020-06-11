@@ -22,12 +22,14 @@ class PropertyRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return array
      */
-    public function findAllVisibleQuery(): Query
+    public function findAllVisible(): array
     {
         return $this->findVisibilequery()
-            ->getQuery();
+            ->getQuery()
+            ->getResult();
+
     }
 
     /**
