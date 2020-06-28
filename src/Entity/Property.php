@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -39,6 +40,9 @@ class Property
 
     /**
      * @var File|null
+     * @Assert\Image(
+     *     mimeTypes="image/jpeg"
+     * )
      * @Vich\UploadableField(mapping="property_image", fileNameProperty="fileName")
      */
     private $imageFile;
@@ -115,6 +119,11 @@ class Property
      * @ORM\ManyToMany(targetEntity=Option::class, inversedBy="properties")
      */
     private $options;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated_at;
 
     public function __construct()
     {
@@ -336,11 +345,16 @@ class Property
     }
 
     /**
-     * @param File $imageFile
+     * @param null|File $imageFile
+     * @return Property
      */
-    public function setImageFile(?File $imageFile): void
+    public function setImageFile(?File $imageFile): Property
     {
         $this->imageFile = $imageFile;
+        if ($this->imageFile instanceof UploadedFile) {
+            $this->updated_at = new \DateTime('now');
+        }
+        return $this;
     }
 
     /**
@@ -353,9 +367,23 @@ class Property
 
     /**
      * @param string|null $fileName
+     * @return Property
      */
-    public function setFileName(?string $fileName): void
+    public function setFileName(?string $fileName): Property
     {
         $this->fileName = $fileName;
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
     }
 }
