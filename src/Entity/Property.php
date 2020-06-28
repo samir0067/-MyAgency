@@ -309,7 +309,7 @@ class Property
 
     public function addOption(Option $option): self
     {
-        if (!$this->options->contains($option)) {
+        if( !$this->options->contains($option) ) {
             $this->options[] = $option;
             $option->addProperty($this);
         }
@@ -319,7 +319,7 @@ class Property
 
     public function removeOption(Option $option): self
     {
-        if ($this->options->contains($option)) {
+        if( $this->options->contains($option) ) {
             $this->options->removeElement($option);
             $option->removeProperty($this);
         }
@@ -358,3 +358,4 @@ class Property
     {
         $this->fileName = $fileName;
     }
+}
